@@ -1,5 +1,5 @@
-require 'torch'
-require 'nn'
+require('torch')
+require('nn')
 local ParallelCriterionIgnoreLabel, parent = torch.class('nn.ParallelCriterionIgnoreLabel', 'nn.Criterion')
 
 function ParallelCriterionIgnoreLabel:__init(repeatTarget)
