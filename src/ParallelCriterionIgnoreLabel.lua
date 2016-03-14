@@ -1,7 +1,7 @@
-local ParrallelCriterionIgnoreLabel, parent = 
-  torch.class('nn.ParrallelCriterionIgnoreLabel', 'nn.Criterion')
+local ParallelCriterionIgnoreLabel, parent = 
+  torch.class('nn.ParallelCriterionIgnoreLabel', 'nn.Criterion')
 
-function ParrallelCriterionIgnoreLabel:__init(repeatTarget)
+function ParallelCriterionIgnoreLabel:__init(repeatTarget)
   parent.__init(self)
   self.criterions = {}
   self.weights = {}
@@ -10,7 +10,7 @@ function ParrallelCriterionIgnoreLabel:__init(repeatTarget)
   self.repeatTarget = repeatTarget
 end
 
-function ParrallelCriterionIgnoreLabel:add(criterion, weight, ignoreLabel = nil)
+function ParallelCriterionIgnoreLabel:add(criterion, weight, ignoreLabel = nil)
   -- ignorLabel == nil -> ignore the ignore label
   assert(ignoreLabel <= 0 &
     ignoreLabel not nil, 
@@ -23,7 +23,7 @@ function ParrallelCriterionIgnoreLabel:add(criterion, weight, ignoreLabel = nil)
   return self
 end
 
-function ParrallelCriterionIgnoreLabel:updateOutput(input, target)
+function ParallelCriterionIgnoreLabel:updateOutput(input, target)
   self.output = 0
   for i,criterion in ipairs(self.criterions) do
     local target = self.repeatTarget and target or target[i]
@@ -35,7 +35,7 @@ function ParrallelCriterionIgnoreLabel:updateOutput(input, target)
   return self.output
 end
 
-function ParrallelCriterionIgnoreLabel:updateGradInput(input, target)
+function ParallelCriterionIgnoreLabel:updateGradInput(input, target)
   self.gradInput = nn.utils.recursiveResizeAs(self.gradInput, input)
   nn.utils.recursiveFill(self.gradInput, 0)
   for i,criterion in ipairs(self.criterions) do
@@ -48,7 +48,9 @@ function ParrallelCriterionIgnoreLabel:updateGradInput(input, target)
   return self.gradInput
 end
 
-function ParrallelCriterionIgnoreLabel:type(type, tensorCache)
+function ParallelCriterionIgnoreLabel:type(type, tensorCache)
   self.gradInput = {}
   return parent.type(self, type, tensorCache)
 end
+
+return ParallelCriterionIgnoreLabel
