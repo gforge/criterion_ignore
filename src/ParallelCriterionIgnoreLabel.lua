@@ -1,20 +1,20 @@
-local ParallelCriterionIgnoreLabel, parent = 
-  torch.class('nn.ParallelCriterionIgnoreLabel', 'nn.Criterion')
+require 'torch'
+require 'nn'
+local ParallelCriterionIgnoreLabel, parent = torch.class('nn.ParallelCriterionIgnoreLabel', 'nn.Criterion')
 
 function ParallelCriterionIgnoreLabel:__init(repeatTarget)
   parent.__init(self)
   self.criterions = {}
   self.weights = {}
   self.gradInput = {}
-  self.ignoreLabel =  {}
+  self.ignoreLabel = {}
   self.repeatTarget = repeatTarget
 end
 
-function ParallelCriterionIgnoreLabel:add(criterion, weight, ignoreLabel = nil)
-  -- ignorLabel == nil -> ignore the ignore label
-  assert(ignoreLabel <= 0 &
-    ignoreLabel not nil, 
-    'The ignore label has to be <= 0 in order to avoid interfering with actual classes')
+function ParallelCriterionIgnoreLabel:add(criterion, weight, ignoreLabel)
+  -- ignoreLabel == nil -> ignore the ignore label
+  ignoreLabel = ignoreLabel or nil
+  assert(ignoreLabel <= 0 and (not ignoreLabel == nil), 'The ignore label has to be <= 0 in order to avoid interfering with actual classes')
   assert(criterion, 'no criterion provided')
   weight = weight or 1
   table.insert(self.criterions, criterion)

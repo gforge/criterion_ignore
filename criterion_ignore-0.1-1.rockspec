@@ -1,7 +1,7 @@
-package = "nn_criterium_ignore"
+package = "criterion_ignore"
  version = "0.1-1"
  source = {
-    url = "git://github.com/gforge/nn_criterium_ignore.git"
+    url = "git://github.com/gforge/nn_criterium_ignore"
  }
  description = {
     summary = "A parallel criterion with ignore label",
@@ -19,11 +19,13 @@ package = "nn_criterium_ignore"
  }
  dependencies = {
     "lua ~> 5.1",
-    "nn >= scm-1"
+    "nn >= scm-1",
+    "torch >= 7.0"
  }
  build = {
   type = 'builtin',
   modules = {
-      ["nn.addon.ParallelCriterionIgnoreLabel"] = 'src/ParallelCriterionIgnoreLabel.lua'
-  },
+      ["criterion_ignore.init"] = 'init.lua',
+      ["criterion_ignore.Parallel"] = 'src/ParallelCriterionIgnoreLabel.lua'
+  }
  }
