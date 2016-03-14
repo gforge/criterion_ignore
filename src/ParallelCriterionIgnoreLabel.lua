@@ -11,15 +11,19 @@ function ParallelCriterionIgnoreLabel:__init(repeatTarget)
   self.repeatTarget = repeatTarget
 end
 
-function ParallelCriterionIgnoreLabel:add(criterion, weight, ignoreLabel)
-  -- ignoreLabel == nil -> ignore the ignore label
-  ignoreLabel = ignoreLabel or nil
-  assert(ignoreLabel <= 0 and (not ignoreLabel == nil), 'The ignore label has to be <= 0 in order to avoid interfering with actual classes')
+function ParallelCriterionIgnoreLabel:add(criterion, weight, ignore)
+  -- ignore == nil -> ignore the ignore label
+  ignore = ignore or "none"
+  if (not ignore == "none") then
+    assert(ignore <= 0, 
+      'The ignore label has to be <= 0 in order to avoid interfering with actual classes.' ..
+      ' Current value is: ' .. ignore)
+  end
   assert(criterion, 'no criterion provided')
   weight = weight or 1
   table.insert(self.criterions, criterion)
   table.insert(self.weights, weight)
-  table.insert(self.ignoreLabel, ignoreLabel)
+  table.insert(self.ignoreLabel, ignore)
   return self
 end
 
@@ -27,7 +31,7 @@ function ParallelCriterionIgnoreLabel:updateOutput(input, target)
   self.output = 0
   for i,criterion in ipairs(self.criterions) do
     local target = self.repeatTarget and target or target[i]
-    if (ignoreLabel[i] == nil or 
+    if (ignoreLabel[i] == "none" or 
       ignoreLabel[i] ~= target[i]) then
       self.output = self.output + self.weights[i]*criterion:updateOutput(input[i],target)
     end
@@ -40,7 +44,7 @@ function ParallelCriterionIgnoreLabel:updateGradInput(input, target)
   nn.utils.recursiveFill(self.gradInput, 0)
   for i,criterion in ipairs(self.criterions) do
     local target = self.repeatTarget and target or target[i]
-    if (ignoreLabel[i] == nil or 
+    if (ignoreLabel[i] == "none" or 
       ignoreLabel[i] ~= target[i]) then
       nn.utils.recursiveAdd(self.gradInput[i], self.weights[i], criterion:updateGradInput(input[i], target))
     end
