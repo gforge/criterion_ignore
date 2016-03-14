@@ -7,10 +7,11 @@ specify an ignore label for each criterion that you add.
 ## Use case:
 
 ```lua
+require 'criterion_ignore'
 model = nn.Sequential()
 model:add(nn.Linear(3,5))
 
-criterion = nn.ParallelCriterionIgnoreLabel()
+criterion = criterion_ignore.Parallel()
 prl = nn.ConcatTable()
 for i=1,7 do
     seq = nn.Sequential()
