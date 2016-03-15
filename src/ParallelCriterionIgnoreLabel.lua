@@ -1,6 +1,6 @@
 require('torch')
 require('nn')
-local ParallelCriterionIgnoreLabel, parent = torch.class('nn.ParallelCriterionIgnoreLabel', 'nn.Criterion')
+local ParallelCriterionIgnoreLabel, parent = torch.class('criterion_ignore.Parallel', 'nn.Criterion')
 
 function ParallelCriterionIgnoreLabel:__init(repeatTarget)
   parent.__init(self)
@@ -31,8 +31,8 @@ function ParallelCriterionIgnoreLabel:updateOutput(input, target)
   self.output = 0
   for i,criterion in ipairs(self.criterions) do
     local target = self.repeatTarget and target or target[i]
-    if (ignoreLabel[i] == "none" or 
-      ignoreLabel[i] ~= target[i]) then
+    if (self.ignoreLabel[i] == "none" or 
+      self.ignoreLabel[i] ~= target) then
       self.output = self.output + self.weights[i]*criterion:updateOutput(input[i],target)
     end
   end
@@ -44,8 +44,8 @@ function ParallelCriterionIgnoreLabel:updateGradInput(input, target)
   nn.utils.recursiveFill(self.gradInput, 0)
   for i,criterion in ipairs(self.criterions) do
     local target = self.repeatTarget and target or target[i]
-    if (ignoreLabel[i] == "none" or 
-      ignoreLabel[i] ~= target[i]) then
+    if (self.ignoreLabel[i] == "none" or 
+      self.ignoreLabel[i] ~= target) then
       nn.utils.recursiveAdd(self.gradInput[i], self.weights[i], criterion:updateGradInput(input[i], target))
     end
   end
@@ -56,5 +56,3 @@ function ParallelCriterionIgnoreLabel:type(type, tensorCache)
   self.gradInput = {}
   return parent.type(self, type, tensorCache)
 end
-
-return ParallelCriterionIgnoreLabel
