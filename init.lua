@@ -13,5 +13,4 @@ criterion_ignore.Parallel = assert(
   loadfile(main_file),
   "Couldn't load " .. main_file)()
 
-print("ASDAS")
 return criterion_ignore
