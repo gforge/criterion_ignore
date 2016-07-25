@@ -1,5 +1,5 @@
 package = "criterion_ignore"
-version = "0.2"
+version = "0.2-1"
 source = {
   url = "git://github.com/gforge/nn_criterium_ignore"
 }
