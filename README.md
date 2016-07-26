@@ -24,7 +24,7 @@ require 'criterion_ignore'
 model = nn.Sequential()
 model:add(nn.Linear(3,5))
 
-criterion = nn.ParallelIgnore()
+criterion = nn.ParallelIgnoreCriterion()
 prl = nn.ConcatTable()
 for i=1,7 do
     seq = nn.Sequential()

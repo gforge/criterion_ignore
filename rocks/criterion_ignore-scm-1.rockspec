@@ -1,5 +1,5 @@
 package = "criterion_ignore"
-version = "0.2-1"
+version = "scm-1"
 source = {
   url = "git://github.com/gforge/criterion_ignore"
 }
@@ -28,6 +28,6 @@ build = {
   modules = {
     ["criterion_ignore.init"] = 'init.lua',
     ["criterion_ignore.argcheck"] = 'argcheck.lua',
-    ["criterion_ignore.src.ParallelIgnore"] = 'src/ParallelIgnore.lua'
+    ["criterion_ignore.src.ParallelIgnoreCriterion"] = 'src/ParallelIgnoreCriterion.lua'
   }
 }

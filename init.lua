@@ -8,8 +8,8 @@ local criterion_ignore = {}
 
 -- Add functions
 -- todo: Extend to single criterions
-local main_file = paths.thisfile():gsub("init.lua$", "src/ParallelIgnore.lua")
-  criterion_ignore.ParallelIgnore = assert(
+local main_file = paths.thisfile():gsub("init.lua$", "src/ParallelIgnoreCriterion.lua")
+  criterion_ignore.ParallelIgnoreCriterion = assert(
   loadfile(main_file),
   "Couldn't load " .. main_file)()
 

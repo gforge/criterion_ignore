@@ -36,7 +36,7 @@ function criterion_ignore_test.Parallel()
   local target = {torch.IntTensor{1,8}, torch.randn(2,10)}
   local nll = nn.ClassNLLCriterion()
   local mse = nn.MSECriterion()
-  local pc = nn.ParallelIgnore()
+  local pc = nn.ParallelIgnoreCriterion()
   pc:add(nll, 0.5):add(mse)
   local output = pc:forward(input, target)
   local output2 = nll:forward(input[1], target[1])/2 + mse:forward(input[2], target[2])
@@ -61,7 +61,7 @@ function criterion_ignore_test.Parallel()
   local input1 = {torch.rand(2,10), torch.randn(2,10)}
   local target1 = torch.randn(2,10)
   local mse1 = nn.MSECriterion()
-  local pc1 = nn.ParallelIgnore(true):
+  local pc1 = nn.ParallelIgnoreCriterion(true):
     add(mse1, 0.5):
     add(mse1:clone())
   local output1_1 = pc1:forward(input1, target1)
@@ -78,8 +78,8 @@ function criterion_ignore_test.Parallel()
   local nll2_2 = nn.ClassNLLCriterion()
   local nll2_1 = nn.ClassNLLCriterion()
   local mse2 = nn.MSECriterion()
-  local pc2_1 = nn.ParallelIgnore():add(nll2_1, 0.5):add(mse2)
-  local pc2_2 = nn.ParallelIgnore():add(nll2_2, 0.4):add(pc2_1)
+  local pc2_1 = nn.ParallelIgnoreCriterion():add(nll2_1, 0.5):add(mse2)
+  local pc2_2 = nn.ParallelIgnoreCriterion():add(nll2_2, 0.4):add(pc2_1)
   local output2_1 = pc2_2:forward(input2, target2)
   local output2_2 = nll2_2:forward(input2[1], target2[1])*0.4 + nll2_1:forward(input2[2][1], target2[2][1])/2 + mse2:forward(input2[2][2], target2[2][2])
   mytester:assert(math.abs(output2_2 - output2_1) < 0.00001, "ParallelCriterionIgnoreLabel table forward error")
@@ -98,7 +98,7 @@ function criterion_ignore_test.Parallel()
   local target3 = {torch.IntTensor{1,8}, torch.IntTensor{1}}
   local nll3_1 = nn.ClassNLLCriterion()
   local nll3_2 = nn.ClassNLLCriterion()
-  local pc3 = nn.ParallelIgnore():
+  local pc3 = nn.ParallelIgnoreCriterion():
     add{
       criterion = nll3_1,
       weight = 0.5}:

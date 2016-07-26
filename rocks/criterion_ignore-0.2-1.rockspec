@@ -29,6 +29,6 @@ build = {
   modules = {
     ["criterion_ignore.init"] = 'init.lua',
     ["criterion_ignore.argcheck"] = 'argcheck.lua',
-    ["criterion_ignore.src.ParallelIgnore"] = 'src/ParallelIgnore.lua'
+    ["criterion_ignore.src.ParallelIgnoreCriterion"] = 'src/ParallelIgnoreCriterion.lua'
   }
 }
