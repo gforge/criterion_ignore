@@ -1,4 +1,4 @@
-# The criterium_ignore addon for torch/nn
+# The criterion_ignore addon for torch/nn
 
 The package is for use with [torch/nn](https://github.com/torch/nn) and adds a
 method for ignoring labels. It is a direct extension of the [ParallelCriterion][1]
@@ -24,7 +24,7 @@ require 'criterion_ignore'
 model = nn.Sequential()
 model:add(nn.Linear(3,5))
 
-criterion = criterion_ignore.Parallel.new()
+criterion = nn.ParallelIgnore()
 prl = nn.ConcatTable()
 for i=1,7 do
     seq = nn.Sequential()
@@ -32,6 +32,7 @@ for i=1,7 do
     seq:add(nn.SoftMax())
     prl:add(seq)
     -- First parameter is weight while the second is the ignore label
+    --  the argcheck allows you though to specify the actual argument names
     criterion:add{
         criterion = nn.ClassNLLCriterion(),
         ignore = 0

@@ -1,8 +1,7 @@
 package = "criterion_ignore"
 version = "0.2-1"
 source = {
-  url = "https://github.com/gforge/criterion_ignore/archive/v0.2.tar.gz",
-  dir = "criterion_ignore-0.2"
+  url = "git://github.com/gforge/criterion_ignore"
 }
 description = {
   summary = "A parallel criterion with ignore label",

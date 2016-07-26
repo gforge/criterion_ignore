@@ -1,13 +1,13 @@
 require('torch')
-require('nn')
+local nn = require('nn')
 local argcheck = require('argcheck')
 
-local Parallel, parent =
-  torch.class('criterion_ignore.Parallel', 'nn.Criterion')
+local ParallelIgnore, parent =
+  torch.class('nn.ParallelIgnore', 'nn.Criterion')
 
-Parallel.__init = argcheck{
+ParallelIgnore.__init = argcheck{
   doc = [[
-### criterion_ignore(@ARGP)
+### nn.ParallelIgnore(@ARGP)
 
 The init function
 
@@ -26,9 +26,9 @@ The init function
   self.repeatTarget = repeatTarget
 end}
 
-Parallel.add = argcheck{
+ParallelIgnore.add = argcheck{
   doc = [[
-### criterion_ignore.Parallel(@ARGP)
+### nn.ParallelIgnore(@ARGP)
 
 Add a criterion
 
@@ -55,9 +55,9 @@ _Return value_: self
   return self
 end}
 
-Parallel.updateOutput = argcheck{
+ParallelIgnore.updateOutput = argcheck{
   doc = [[
-### criterion_ignore.updateOutput(@ARGP)
+### nn.updateOutput(@ARGP)
 
 Upades the self.output a weighted sum of the criterions `updateOutput`
 
@@ -82,9 +82,9 @@ _Return value_: self.output
   return self.output
 end}
 
-Parallel.updateGradInput = argcheck{
+ParallelIgnore.updateGradInput = argcheck{
   doc = [[
-### criterion_ignore.updateGradInput(@ARGP)
+### nn.updateGradInput(@ARGP)
 
 Upades the self.gradInput a weighted sum of the criterions `updateGradInput`
 
@@ -108,9 +108,9 @@ _Return value_: self.gradInput
   return self.gradInput
 end}
 
-Parallel.type = argcheck{
+ParallelIgnore.type = argcheck{
   doc = [[
-### criterion_ignore.type(@ARGP)
+### nn.type(@ARGP)
 
 Sets the type
 
@@ -128,4 +128,4 @@ _Return value_: self
   return parent.type(self, type, tensorCache)
 end}
 
-return Parallel
+return ParallelIgnore
