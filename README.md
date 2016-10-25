@@ -14,7 +14,7 @@ etc. If you mistype an argument then there is an automated help print.
 In order to install the package you need to do it directly from the GitHub repo (at the moment):
 
 ```bash
-luarocks install https://raw.githubusercontent.com/gforge/criterion_ignore/master/criterion_ignore-0.2-1.rockspec
+luarocks install https://raw.githubusercontent.com/gforge/criterion_ignore/master/rocks/criterion_ignore-0.2-1.rockspec
 ```
 
 ## Use case:
